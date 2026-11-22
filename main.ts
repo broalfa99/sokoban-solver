@@ -6,6 +6,8 @@ r.forEach((s,y)=>[...s].forEach((c,x)=>{const i=(y+1)*w+x+1;if(c!='#'&&c!='-')f[
 let q=[P];f[P]=1;while(q.length){const p=q.pop()!;for(const d of D)if(f[p+d]==2)f[p+d]=1,q.push(p+d)}
 for(let p=P;f[p]==1;p--)H[p]=1;for(let p=P;f[p]==1;p++)H[p]=1
 for(let i=0;i<N;i++)if(f[i]==1&&!H[i]&&m[i]<0){q=[i];m[i]=n;while(q.length){const p=q.pop()!;for(const d of D)if(f[p+d]==1&&!H[p+d]&&m[p+d]<0)m[p+d]=n,q.push(p+d)}n++}
+// unexpected layout (a room whose boxes and goals differ, or a box off every room): one region, no hallway
+for(let k=0;k<n;k++){let x=0;for(let i=0;i<N;i++)if(m[i]==k)x+=g[i]-(B.includes(i)?1:0);if(x||B.some(b=>m[b]<0)){H.fill(0);for(let i=0;i<N;i++)m[i]=f[i]==1?0:-1;n=1;break}}
 // flood: player area from p avoiding boxes b; returns min square, marks area in a
 const fl=(p:number,b:Uint8Array,ok:(v:number)=>any,a:Int32Array,s:number)=>{let k=p;q=[p];a[p]=s;while(q.length){const u=q.pop()!;if(u<k)k=u;for(const d of D){const v=u+d;if(ok(v)&&!b[v]&&a[v]!=s)a[v]=s,q.push(v)}}return k}
 const A=new Int32Array(N),C=new Int32Array(N),b=new Uint8Array(N),pl:number[]=[];let s=0
